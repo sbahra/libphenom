@@ -77,9 +77,12 @@ static void deferred_free(ck_epoch_entry_t *e)
 static void hs_free(void *p, size_t b, bool r)
 {
   ck_epoch_entry_t *e = p;
-  e--; /* See comment above hs_malloc */
 
   ph_unused_parameter(b);
+  if (e == NULL)
+    return;
+
+  e--; /* See comment above hs_malloc */
 
   if (r == true) {
     /* Destruction requires safe memory reclamation. */
